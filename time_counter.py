@@ -3,7 +3,7 @@ from tkinter import *
 from tkinter import ttk
 from xml.dom import minicompat
 import openpyxl as op
-from openpyxl.utils import FORMULAE
+import math
 
 def start_time():
     filename="count_time.xlsx"
@@ -62,14 +62,12 @@ def end_time():
         sum_time=time.strftime("%H:%M:%S",sum_time)
         sheet["E2"]=sum_time
         sheet["E3"]=" "
-        print(total_hours, total_min,total_sec)
-        print(sheet["E2"].value)
     else:      
         sum_time=sheet["D2"].value
         sheet["E2"]=sum_time
     workbook.save(filename=filename)
     button1.config(state=NORMAL)
-    
+
 root = Tk()
 root.title("Counting Times")
 root.geometry("300x200")
