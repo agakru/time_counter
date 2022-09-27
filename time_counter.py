@@ -1,9 +1,10 @@
 import time
 from tkinter import *
 from tkinter import ttk
-from xml.dom import minicompat
+import tkinter
 import openpyxl as op
 import math
+from PIL import Image, ImageTk
 
 def start_time():
     filename="count_time.xlsx"
@@ -19,6 +20,13 @@ def start_time():
     sheet["D2"]= st
     workbook.save(filename=filename)
     button1.config(state=DISABLED)
+    button2.config(state=NORMAL)
+    c.itemconfig(label2,text=" ")
+    c.itemconfig(label3,text=" ")
+    c.itemconfig(label1,text=time_string,
+                font=("Times New Roman", 14))
+    label5.config(image=img, state=NORMAL)
+    workbook.close()
 
 def end_time():
     filename="count_time.xlsx"
@@ -33,7 +41,7 @@ def end_time():
     work_time=time.gmtime(et-st)
     work_str=time.strftime("%H:%M:%S",work_time)
     sheet["D2"]=work_str
-    label2.config(text=work_str)
+
     if sheet["A2"].value==sheet["A3"].value:
         cell1=sheet["D2"].value
         cell2=sheet["E3"].value
@@ -67,20 +75,50 @@ def end_time():
         sheet["E2"]=sum_time
     workbook.save(filename=filename)
     button1.config(state=NORMAL)
+    button2.config(state=DISABLED)
+    label5.config(state=DISABLED)
+    c.itemconfig(label2,text=time_string,
+                font=("Times New Roman", 14))
+    c.itemconfig(label3,text=work_str,
+    font=("Times New Roman", 14))
+    workbook.close()
 
-root = Tk()
+
+root =tkinter.Tk()
 root.title("Counting Times")
 root.geometry("300x200")
-
-label1 = ttk.Label(root, text="Start counting time: ")
-label1.place(x=0,y=0)
-button1=ttk.Button(root, text="Start",command=lambda: start_time(),state=NORMAL)
-button1.place(x=50,y=50)
-button2=ttk.Button(root, text="Stop",command=lambda: end_time())
-button2.place(x=175,y=50)
-label2 = ttk.Label(root, text="Here will be yor working time!")
-label2.place(x=125,y=100)
+c =tkinter.Canvas(root, width=300, height=200)
+c.pack()
+bg_path = Image.open("C:/Users/PIERWSZY/Desktop/Projekty/Git/git_kurs/clock.png")
+bg_size = bg_path.resize((300,200))
+bg1= ImageTk.PhotoImage(bg_size)
+id= c.create_image(0,0,anchor="nw",image=bg1)
+image_start = Image.open("C:/Users/PIERWSZY/Desktop/Projekty/Git/git_kurs/start.png")
+img_st_size = image_start.resize((70,20))
+img_st = ImageTk.PhotoImage(img_st_size)
+image_stop = Image.open("C:/Users/PIERWSZY/Desktop/Projekty/Git/git_kurs/stop.png")
+img_sp_size = image_stop.resize((70,20))
+img_sp = ImageTk.PhotoImage(img_sp_size)
+button1=ttk.Button(root, text="Start",command=lambda: start_time(),state=NORMAL,image=img_st)
+button1.place(x=50,y=30)
+label1=c.create_text(90,20,text="Start time:",
+                font=("Times New Roman", 14))
+    
+button2=ttk.Button(root, text="Stop",command=lambda: end_time(),state=DISABLED,image=img_sp)
+button2.place(x=175,y=30)
+label2 =c.create_text(215,20,text="Stop time:",
+                font=("Times New Roman", 14))
+label3 = c.create_text(150,90,text=" ",
+                font=("Times New Roman", 14)) 
+label4 = c.create_text(150,70,text="Work time: ",
+                font=("Times New Roman", 14)) 
 button3=ttk.Button(root, text="Quit", command=root.destroy)
-button3.place(x=110,y=150)
+button3.place(x=110,y=170)
+image1 = Image.open("C:/Users/PIERWSZY/Desktop/Projekty/Git/git_kurs/lets_go.png")
+img = image1.resize((150,60))
+img = ImageTk.PhotoImage(img)
+label5 = ttk.Label(root,state=DISABLED, background = "#f6f6f6")
+label5.place(x=75,y=100)
+
 root.mainloop()
 
