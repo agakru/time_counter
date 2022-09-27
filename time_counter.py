@@ -1,6 +1,6 @@
 import time
 from tkinter import *
-from tkinter import ttk
+from tkinter import ttk,messagebox
 import tkinter
 import openpyxl as op
 import math
@@ -10,7 +10,16 @@ def start_time():
     filename="count_time.xlsx"
     workbook=op.load_workbook(filename)
     sheet=workbook.active
-    st=time.time()
+    while True: 
+        try:
+            workbook.save(filename=filename)
+            break
+        except PermissionError:
+            print("Close your excel")
+            messagebox.showerror(title="Python Error", message="Close your Excel!")
+            time.sleep(2)
+
+    st=math.floor(time.time())
     result=time.localtime(st)    
     date_string=time.strftime("%d/%m/%Y",result)
     time_string=time.strftime("%H:%M:%S",result)
@@ -18,21 +27,22 @@ def start_time():
     sheet["A2"]= date_string
     sheet["B2"]= time_string
     sheet["D2"]= st
-    workbook.save(filename=filename)
+  
     button1.config(state=DISABLED)
     button2.config(state=NORMAL)
     c.itemconfig(label2,text=" ")
-    c.itemconfig(label3,text=" ")
+    c.itemconfig(label4,text=" ")
     c.itemconfig(label1,text=time_string,
                 font=("Times New Roman", 14))
-    label5.config(image=img, state=NORMAL)
+    #label5.config(image=img, state=NORMAL)
+    workbook.save(filename=filename)
     workbook.close()
 
 def end_time():
     filename="count_time.xlsx"
     workbook=op.load_workbook(filename)
     sheet=workbook.active
-    et=time.time()
+    et=math.floor(time.time())
     result=time.localtime(et)
     time_string=time.strftime("%H:%M:%S",result)
     sheet["C2"]= time_string
@@ -76,49 +86,51 @@ def end_time():
     workbook.save(filename=filename)
     button1.config(state=NORMAL)
     button2.config(state=DISABLED)
-    label5.config(state=DISABLED)
+    #label5.config(state=DISABLED)
     c.itemconfig(label2,text=time_string,
                 font=("Times New Roman", 14))
-    c.itemconfig(label3,text=work_str,
+    c.itemconfig(label4,text=work_str,
     font=("Times New Roman", 14))
     workbook.close()
 
-
 root =tkinter.Tk()
 root.title("Counting Times")
-root.geometry("300x200")
-c =tkinter.Canvas(root, width=300, height=200)
+root.geometry("300x300")
+c =tkinter.Canvas(root, width=300, height=300)
 c.pack()
+
 bg_path = Image.open("C:/Users/PIERWSZY/Desktop/Projekty/Git/git_kurs/clock.png")
-bg_size = bg_path.resize((300,200))
+bg_size = bg_path.resize((300,300))
 bg1= ImageTk.PhotoImage(bg_size)
 id= c.create_image(0,0,anchor="nw",image=bg1)
+
 image_start = Image.open("C:/Users/PIERWSZY/Desktop/Projekty/Git/git_kurs/start.png")
 img_st_size = image_start.resize((70,20))
 img_st = ImageTk.PhotoImage(img_st_size)
+
+button1=ttk.Button(root, text="Start",command=lambda: start_time(),state=NORMAL,image=img_st)
+button1.place(x=40,y=30)
+label1=c.create_text(80,20,text="Start time:",
+                font=("Times New Roman", 14))  
+
 image_stop = Image.open("C:/Users/PIERWSZY/Desktop/Projekty/Git/git_kurs/stop.png")
 img_sp_size = image_stop.resize((70,20))
 img_sp = ImageTk.PhotoImage(img_sp_size)
-button1=ttk.Button(root, text="Start",command=lambda: start_time(),state=NORMAL,image=img_st)
-button1.place(x=50,y=30)
-label1=c.create_text(90,20,text="Start time:",
-                font=("Times New Roman", 14))
-    
 button2=ttk.Button(root, text="Stop",command=lambda: end_time(),state=DISABLED,image=img_sp)
-button2.place(x=175,y=30)
-label2 =c.create_text(215,20,text="Stop time:",
+button2.place(x=185,y=30)
+label2 =c.create_text(225,20,text="Stop time:",
                 font=("Times New Roman", 14))
-label3 = c.create_text(150,90,text=" ",
+
+label3 = c.create_text(150,115,text="Work time: ",
                 font=("Times New Roman", 14)) 
-label4 = c.create_text(150,70,text="Work time: ",
+label4 = c.create_text(150,156,text=" ",
                 font=("Times New Roman", 14)) 
+
 button3=ttk.Button(root, text="Quit", command=root.destroy)
-button3.place(x=110,y=170)
-image1 = Image.open("C:/Users/PIERWSZY/Desktop/Projekty/Git/git_kurs/lets_go.png")
-img = image1.resize((150,60))
-img = ImageTk.PhotoImage(img)
-label5 = ttk.Label(root,state=DISABLED, background = "#f6f6f6")
-label5.place(x=75,y=100)
-
+button3.place(x=120,y=270)
+#image1 = Image.open("C:/Users/PIERWSZY/Desktop/Projekty/Git/git_kurs/lets_go.png")
+#img = image1.resize((150,80))
+#img = ImageTk.PhotoImage(img)
+#label5 = ttk.Label(root,state=DISABLED)
+#label5.place(x=75,y=100)
 root.mainloop()
-
