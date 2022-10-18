@@ -18,6 +18,9 @@ def start_time():
             print("Close your excel")
             messagebox.showerror(title="Python Error", message="Close your Excel!")
             time.sleep(2)
+    for row in sheet:
+        if sheet["E3"]==' ':
+            sheet.delete_rows(row[0])
 
     st=math.floor(time.time())
     result=time.localtime(st)    
@@ -34,7 +37,6 @@ def start_time():
     c.itemconfig(label4,text=" ")
     c.itemconfig(label1,text=time_string,
                 font=("Times New Roman", 14))
-    #label5.config(image=img, state=NORMAL)
     workbook.save(filename=filename)
     workbook.close()
 
@@ -51,7 +53,7 @@ def end_time():
     work_time=time.gmtime(et-st)
     work_str=time.strftime("%H:%M:%S",work_time)
     sheet["D2"]=work_str
-
+    #if the same day 
     if sheet["A2"].value==sheet["A3"].value:
         cell1=sheet["D2"].value
         cell2=sheet["E3"].value
@@ -66,7 +68,7 @@ def end_time():
         total_hours=hours1+hours2
         total_min=min1+min2
         total_sec=sec1+sec2
-       
+        
         if total_min>=60:
             extra_hours=total_min//60
             total_min=total_min-(extra_hours*60)
@@ -75,6 +77,10 @@ def end_time():
             extra_min=total_sec//60
             total_sec=total_sec-(extra_min*60)
             total_min=total_min+extra_min
+        if total_hours>24:
+            total_day=total_hours//24
+            total_hours=total_hours-(total_day*24)
+            sheet["F2"]=total_day
         sumtime=str(total_hours)+':'+ str(total_min)+":"+ str(total_sec)
         sum_time=time.strptime( sumtime,"%H:%M:%S")
         sum_time=time.strftime("%H:%M:%S",sum_time)
@@ -86,7 +92,7 @@ def end_time():
     workbook.save(filename=filename)
     button1.config(state=NORMAL)
     button2.config(state=DISABLED)
-    #label5.config(state=DISABLED)
+
     c.itemconfig(label2,text=time_string,
                 font=("Times New Roman", 14))
     c.itemconfig(label4,text=work_str,
@@ -128,9 +134,5 @@ label4 = c.create_text(150,156,text=" ",
 
 button3=ttk.Button(root, text="Quit", command=root.destroy)
 button3.place(x=120,y=270)
-#image1 = Image.open("C:/Users/PIERWSZY/Desktop/Projekty/Git/git_kurs/lets_go.png")
-#img = image1.resize((150,80))
-#img = ImageTk.PhotoImage(img)
-#label5 = ttk.Label(root,state=DISABLED)
-#label5.place(x=75,y=100)
+
 root.mainloop()
