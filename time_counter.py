@@ -70,7 +70,7 @@ def end_time():
     work_time=time.gmtime(end_count - start_counting)
     work_str=time.strftime("%H:%M:%S", work_time)
     sheet[START_COUNTING_IN_SEC]=work_str
-    #if the same day 
+
     if sheet[ACTUAL_DATE].value == sheet[PREVIOUS_DATE].value:
         read_start_time_in_sec=sheet[START_COUNTING_IN_SEC].value
         read_sum_time=sheet[SUM_TIME_PREVIOUS].value
@@ -114,11 +114,12 @@ def end_time():
     canvas.itemconfig(label_stop, text=time_string,
                 font=("Times New Roman", SIZE_OF_FONT))
     canvas.itemconfig(label_show_work_time, text=work_str,
-                font=("Times New Roman", SIZE_OF_FONT))
+                font=("Times New Roman bold", SIZE_OF_FONT))
     workbook.close()
 
 root=tkinter.Tk()
-root.title("Counting Times")
+root.title("Time Counter")
+root.resizable(0,0)
 canvas=tkinter.Canvas(root, width=WIDTH, height=HEIGHT)
 canvas.pack()
 
@@ -145,9 +146,9 @@ label_stop =canvas.create_text(225, 20, text="Stop time:",
                 font=("Times New Roman", SIZE_OF_FONT))
 
 label_work_time = canvas.create_text(150, 115, text="Work time: ",
-                font=("Times New Roman", SIZE_OF_FONT)) 
+                font=("Times New Roman bold", SIZE_OF_FONT)) 
 label_show_work_time = canvas.create_text(150, 156, text=" ",
-                font=("Times New Roman", SIZE_OF_FONT)) 
+                font=("Times New Roman bold", SIZE_OF_FONT)) 
 
 button_quit=ttk.Button(root, text="Quit", command=root.destroy)
 button_quit.place(x=115, y=270)
