@@ -31,7 +31,7 @@ def check_if_open(workbook, filename):
             time.sleep(2)
 
 def start_time():
-    filename="count_time_test.xlsx"
+    filename="time counter.xlsx"
     workbook=op.load_workbook(filename)
     sheet=workbook.active
     for row in sheet:
@@ -59,7 +59,7 @@ def start_time():
     workbook.close()
 
 def end_time():
-    filename="count_time_test.xlsx"
+    filename="time counter.xlsx"
     workbook=op.load_workbook(filename)
     sheet=workbook.active
     end_count=math.floor(time.time())
