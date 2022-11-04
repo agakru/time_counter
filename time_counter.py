@@ -15,6 +15,7 @@ START_COUNTING_IN_SEC="D2"
 SUM_TIME_PREVIOUS="E3"
 SUM_TIME="E2"
 TOTAL_DAY="F2"
+RED=(255,0,0)
 START_ROW=2
 SIZE_OF_FONT=14
 WIDTH=300
@@ -31,7 +32,7 @@ def check_if_open(workbook, filename):
             time.sleep(2)
 
 def start_time():
-    filename="time counter.xlsx"
+    filename="count_time.xlsx"
     workbook=op.load_workbook(filename)
     sheet=workbook.active
     for row in sheet:
@@ -59,7 +60,7 @@ def start_time():
     workbook.close()
 
 def end_time():
-    filename="time counter.xlsx"
+    filename="count_time.xlsx"
     workbook=op.load_workbook(filename)
     sheet=workbook.active
     end_count=math.floor(time.time())
@@ -124,6 +125,7 @@ canvas=tkinter.Canvas(root, width=WIDTH, height=HEIGHT)
 canvas.pack()
 
 background_path = Image.open(os.path.abspath("clock.png"))
+background_path.putalpha(60) 
 background_size = background_path.resize((WIDTH, HEIGHT))
 background_img= ImageTk.PhotoImage(background_size)
 background= canvas.create_image(0, 0, anchor="nw", image=background_img)
@@ -146,9 +148,9 @@ label_stop =canvas.create_text(225, 20, text="Stop time:",
                 font=("Times New Roman", SIZE_OF_FONT))
 
 label_work_time = canvas.create_text(150, 115, text="Work time: ",
-                font=("Times New Roman bold", SIZE_OF_FONT)) 
+                font=("Times New Roman underline", SIZE_OF_FONT)) 
 label_show_work_time = canvas.create_text(150, 156, text=" ",
-                font=("Times New Roman bold", SIZE_OF_FONT)) 
+                font=("Times New Roman bold underline", SIZE_OF_FONT,)) 
 
 button_quit=ttk.Button(root, text="Quit", command=root.destroy)
 button_quit.place(x=115, y=270)
