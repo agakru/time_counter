@@ -6,7 +6,8 @@ The project was made to count how much time user spend at some activities. “Ti
  
 When the user presses start button in program, then the current time is displayed on the screen and this time is saved to Excel. By clicking stop button we can stop counting time to display and save user’s work time.
 
-![image](https://user-images.githubusercontent.com/112821884/200196131-56386f95-17a6-408d-8895-7651122ec634.png)
-![image](https://user-images.githubusercontent.com/112821884/200196186-19388eb5-e6ee-448b-9e6a-7c44a0cb37a8.png)
+![image](https://user-images.githubusercontent.com/112821884/200196253-6b14c01f-2cc6-4cd2-9893-ced6514fe2cc.png)
+![image](https://user-images.githubusercontent.com/112821884/200196274-ca6596df-032f-48e0-8731-c9d2b688eb3b.png)
+
   
 
